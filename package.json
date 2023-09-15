@@ -16,7 +16,7 @@
     "commands": [
       {
         "command": "rust-target-toggle.toggleTarget",
-        "title": "Rust Togggle Target"
+        "title": "Rust Toggle Target"
       }
     ]
   },

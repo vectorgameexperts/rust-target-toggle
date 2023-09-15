@@ -10,28 +10,26 @@ export function activate(context: vscode.ExtensionContext) {
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "rust-target-toggle" is now active!');
-	
-	let statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
-    statusBarItem.text = "$(symbol-misc)";
+	const settings = vscode.workspace.getConfiguration('rust-analyzer');
+	const currentValue = settings.get('cargo.target');
+	const target = 'wasm32-unknown-unknown';
+
+	// button 
+	let statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left);
+    statusBarItem.text = "Target: " + currentValue;
     statusBarItem.tooltip = "Toggle Rust Target";
     statusBarItem.command = 'rust-target-toggle.toggleTarget';
     statusBarItem.show();
     context.subscriptions.push(statusBarItem);
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
+
 	let disposable = vscode.commands.registerCommand('rust-target-toggle.toggleTarget', async  () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		let target = 'wasm32-unknown-unknown';
-		const settings = vscode.workspace.getConfiguration('rust-analyzer');
-		const currentValue = settings.get('cargo.target');
-		vscode.window.showInformationMessage('current val '+ currentValue);
+		// if current val is wasm
 		if (currentValue === target) {
 			try{
 			 	await settings.update('cargo.target', undefined, vscode.ConfigurationTarget.Workspace);
 				vscode.window.showInformationMessage('Removed target setting, you can ignore the rust server restart');
-				vscode.commands.executeCommand('rust-analyzer.restartServer'); 
+				//restart server
+				await vscode.commands.executeCommand('rust-analyzer.restartServer'); 
 			}
 			catch  (error) {
 				console.log('failure removing cargo target' + error);
@@ -39,12 +37,14 @@ export function activate(context: vscode.ExtensionContext) {
 			finally{
 				vscode.window.showInformationMessage("Sucess");
 			}
+		// else replace with wasm	
 		}  else {
 			try  {
-				await settings.update('cargo.target', 'wasm32-unknown-unknown', vscode.ConfigurationTarget.Workspace);
-				//@command:rust-analyzer.restartServer
-				vscode.commands.executeCommand('rust-analyzer.restartServer'); 
+				await settings.update('cargo.target', target, vscode.ConfigurationTarget.Workspace);
 				vscode.window.showInformationMessage('Swapped target to '+ target + " you can ignore the rust server restart");
+				//restart server
+				await vscode.commands.executeCommand('rust-analyzer.restartServer'); 
+
 			}
 			catch  (error) {
 				console.log('failure updating cargo target' + error);
@@ -56,7 +56,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 
 	});
-
+	vscode.workspace.getConfiguration('rust-analyzer');
 	context.subscriptions.push(disposable);
 
 }
