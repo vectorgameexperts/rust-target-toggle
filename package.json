@@ -1,18 +1,18 @@
 {
   "name": "rust-target-toggle",
-  "displayName": "rust-target-toggle",
-  "description": "Toggles between rust targets ",
+  "displayName": "Rust Target Toggle",
+  "description": "Toggles between rust targets (null/  wasm32-unknown-unknown)",
   "publisher": "VectorGameExperts",
   "repository": {
     "type": "git",
     "url": "https://github.com/vectorgameexperts/rust-target-toggle.git"
   },
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.82.0"
   },
   "categories": [
-    "Other"
+    "Programming Languages"
   ],
   "activationEvents": [],
   "main": "./out/extension.js",
