@@ -1,6 +1,5 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
-import { ConsoleMessage } from 'puppeteer';
 import * as vscode from 'vscode';
 
 // This method is called when your extension is activated
