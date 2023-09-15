@@ -28,6 +28,7 @@ export function activate(context: vscode.ExtensionContext) {
 			try{
 			 	await settings.update('cargo.target', undefined, vscode.ConfigurationTarget.Workspace);
 				vscode.window.showInformationMessage('Removed target setting, you can ignore the rust server restart');
+				
 				//restart server
 				await vscode.commands.executeCommand('rust-analyzer.restartServer'); 
 			}
