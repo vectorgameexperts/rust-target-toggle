@@ -20,8 +20,8 @@ Toggle between different Rust Analyzer targets in Visual Studio Code.
 
 ## Usage
 
-1. Click on the Rust Target Toggle button in the status bar (symbol: `$(symbol-misc)`).
-2. The extension will switch between the specified Rust Analyzer target.
+1. Click on the Rust Target Toggle button in the status bar.
+2. The extension will switch between the specified Rust Analyzer target and display the next option to toggle.
 
 ## Extension Settings
 

@@ -8,16 +8,30 @@ const settings = vscode.workspace.getConfiguration('rust-analyzer');
 const defaultValue = settings.get('cargo.target');
 const target = 'wasm32-unknown-unknown';
 let currentValue= defaultValue;
-
+let statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left);
 
 export function activate(context: vscode.ExtensionContext) {
 
 	
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "rust-target-toggle" is now active!');
+	console.log(' "rust-target-toggle" is now active!');
 	
 	
+
+
+	// button
+	
+    statusBarItem.text = "Target Toggle";
+    statusBarItem.tooltip = "Toggle Rust Target";
+    statusBarItem.command = 'rust-target-toggle.toggleTarget';
+    statusBarItem.show();
+    context.subscriptions.push(statusBarItem);
+	
+	vscode.workspace.getConfiguration('rust-analyzer');
+	context.subscriptions.push(disposable);
+
+}
 
 	let disposable = vscode.commands.registerCommand('rust-target-toggle.toggleTarget', async  () => {
 		// if current val is wasm
@@ -36,6 +50,7 @@ export function activate(context: vscode.ExtensionContext) {
 			finally{
 				vscode.window.showInformationMessage("Sucess");
 				currentValue = null;
+				statusBarItem.text = "Target " + target;
 				console.log("leaving... " + settings.get('cargo.target'));
 			}
 		// else replace with wasm	
@@ -53,22 +68,10 @@ export function activate(context: vscode.ExtensionContext) {
 			finally{
 				vscode.window.showInformationMessage("Success");
 				currentValue = target;
+				statusBarItem.text = "Target Null";
 				console.log("leaving... " + settings.get('cargo.target'));
 			}
 
 		}
 
 	});
-
-	// button
-	let statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left);
-    statusBarItem.text = "Target Toggle";
-    statusBarItem.tooltip = "Toggle Rust Target";
-    statusBarItem.command = 'rust-target-toggle.toggleTarget';
-    statusBarItem.show();
-    context.subscriptions.push(statusBarItem);
-	
-	vscode.workspace.getConfiguration('rust-analyzer');
-	context.subscriptions.push(disposable);
-
-}

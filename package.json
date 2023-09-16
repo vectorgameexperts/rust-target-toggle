@@ -7,14 +7,14 @@
     "type": "git",
     "url": "https://github.com/vectorgameexperts/rust-target-toggle.git"
   },
-  "version": "0.0.2",
+  "version": "0.0.3",
   "engines": {
     "vscode": "^1.82.0"
   },
   "categories": [
     "Programming Languages"
   ],
-  "activationEvents": [],
+  "activationEvents": ["onLanguage:rust"],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
